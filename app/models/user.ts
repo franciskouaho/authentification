@@ -24,6 +24,9 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column({ serializeAs: null })
   declare password: string
 
+  @column()
+  declare avatarUrl: string | null
+
   @column({
     consume: (value: string) => value as AppSource,
     serialize: (value: AppSource) => value,

@@ -10,6 +10,7 @@ export default class extends BaseSchema {
       table.string('full_name').nullable()
       table.string('email', 255).notNullable().unique()
       table.string('password', 180).notNullable()
+      table.string('avatar_url').nullable()
       table.enum('app_source', Object.values(AppSource)).notNullable()
       table.boolean('is_premium').defaultTo(false)
       table.timestamp('created_at').notNullable()
