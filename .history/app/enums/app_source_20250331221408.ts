@@ -1,0 +1,6 @@
+export enum AppSource {
+  MOBILE_ANDROID = 'MOBILE_ANDROID',
+  MOBILE_IOS = 'MOBILE_IOS',
+  WEB = 'WEB',
+  DESKTOP = 'DESKTOP',
+}

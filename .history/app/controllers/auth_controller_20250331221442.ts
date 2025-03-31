@@ -49,7 +49,6 @@ export default class AuthController {
    */
   async register({ request, response }: HttpContext) {
     const userData = await request.validateUsing(registerValidator)
-
     const { email, password, fullName, app_source } = userData
 
     const existingUser: User | null = await User.findBy('email', email)
@@ -66,7 +65,7 @@ export default class AuthController {
         password,
         fullName,
         appSource: app_source,
-        isPremium: false,
+        isPremium: false, // par défaut, l'utilisateur n'est pas premium
       })
 
       const token: AccessToken = await User.accessTokens.create(user)

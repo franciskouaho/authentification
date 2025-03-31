@@ -49,7 +49,6 @@ export default class AuthController {
    */
   async register({ request, response }: HttpContext) {
     const userData = await request.validateUsing(registerValidator)
-
     const { email, password, fullName, app_source } = userData
 
     const existingUser: User | null = await User.findBy('email', email)

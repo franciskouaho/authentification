@@ -4,7 +4,6 @@ import { compose } from '@adonisjs/core/helpers'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
-import { AppSource } from '../enums/app_source.js'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -24,14 +23,17 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column({ serializeAs: null })
   declare password: string
 
-  @column({
-    consume: (value: string) => value as AppSource,
-    serialize: (value: AppSource) => value,
-  })
-  declare appSource: AppSource
+  @column()
+  declare bridgeTempUserId: string | null
 
   @column()
-  declare isPremium: boolean
+  declare bridgeConnected: boolean
+
+  @column.dateTime()
+  declare bridgeLastSync: DateTime | null
+
+  @column()
+  declare bridgeTotalAccounts: number
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

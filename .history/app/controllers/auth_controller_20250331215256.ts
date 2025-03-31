@@ -50,7 +50,9 @@ export default class AuthController {
   async register({ request, response }: HttpContext) {
     const userData = await request.validateUsing(registerValidator)
 
-    const { email, password, fullName, app_source } = userData
+    console.log('Inscription:', userData)
+
+    const { email, password, fullName } = userData
 
     const existingUser: User | null = await User.findBy('email', email)
 
@@ -65,8 +67,6 @@ export default class AuthController {
         email,
         password,
         fullName,
-        appSource: app_source,
-        isPremium: false,
       })
 
       const token: AccessToken = await User.accessTokens.create(user)
@@ -77,8 +77,6 @@ export default class AuthController {
           id: user.id,
           email: user.email,
           fullName: user.fullName,
-          appSource: user.appSource,
-          isPremium: user.isPremium,
           createdAt: user.createdAt,
         },
       })
@@ -107,13 +105,6 @@ export default class AuthController {
   async me({ auth, response }: HttpContext) {
     const user = auth.user!
 
-    return response.ok({
-      id: user.id,
-      email: user.email,
-      fullName: user.fullName,
-      appSource: user.appSource,
-      isPremium: user.isPremium,
-      createdAt: user.createdAt,
-    })
+    return response.ok(user)
   }
 }
